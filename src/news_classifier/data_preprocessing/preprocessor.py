@@ -9,7 +9,7 @@ class BasePreprocessor(ABC):
         pass
 
     @abstractmethod
-    def save_data(self, data: pd.DataFrame, output_path: str) -> None:
+    def save(self, data: pd.DataFrame, output_path: str) -> None:
         pass
 
 class Preprocessor(BasePreprocessor):
@@ -29,7 +29,7 @@ class Preprocessor(BasePreprocessor):
         cleaned_df = raw_df
         return cleaned_df
 
-    def save_data(self, data: pd.DataFrame, output_path: str) -> None:
+    def save(self, data: pd.DataFrame, output_path: str) -> None:
         data.to_csv(output_path, index=False)
 
 if __name__ == "__main__":
@@ -37,4 +37,4 @@ if __name__ == "__main__":
     raw_input_path = "../../../datasets/raw/combined.csv"
     clean_output_path = "../../../datasets/clean/cleaned_data.csv"
     clean_df = preprocessor.clean_data(raw_input_path)
-    preprocessor.save_data(clean_df, clean_output_path)
+    preprocessor.save(clean_df, clean_output_path)

@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from constants import JOBS_MAPPINGS, LABELS_MAPPINGS, STATES_MAPPINGS
+from news_classifier.utils.constants import JOBS_MAPPINGS, LABELS_MAPPINGS, STATES_MAPPINGS
 
 class BasePreprocessor(ABC):
     @abstractmethod

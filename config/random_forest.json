@@ -10,12 +10,12 @@
         "data": {
             "train": "datasets/clean/data/train_data.csv",
             "test": "datasets/clean/data/test_data.csv",
-            "val": "datasets/clean/data/valid_data.csv"
+            "val": "datasets/clean/data/val_data.csv"
         },
         "labels": {
             "train": "datasets/clean/labels/train_labels.csv",
             "test": "datasets/clean/labels/test_labels.csv",
-            "val": "datasets/clean/labels/valid_labels.csv"
+            "val": "datasets/clean/labels/val_labels.csv"
         }
     },
     "featurizer_path": "cache/featurizer.pkl",

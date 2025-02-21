@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 import pandas as pd
-
-from news_classifier.utils.constants import JOBS_MAPPINGS, LABELS_MAPPINGS, STATES_MAPPINGS
+from sklearn.model_selection import train_test_split
+from constants import JOBS_MAPPINGS, LABELS_MAPPINGS, STATES_MAPPINGS
 
 class BasePreprocessor(ABC):
     @abstractmethod
@@ -35,6 +35,22 @@ class Preprocessor(BasePreprocessor):
 if __name__ == "__main__":
     preprocessor = Preprocessor()
     raw_input_path = "../../../datasets/raw/combined.csv"
-    clean_output_path = "../../../datasets/clean/cleaned_data.csv"
-    clean_df = preprocessor.clean_data(raw_input_path)
-    preprocessor.save(clean_df, clean_output_path)
+    cleaned_df = preprocessor.clean_data(raw_input_path)
+
+    X, y = cleaned_df.drop(columns=["label"]), cleaned_df["label"]
+
+    # 60% train, 20% test, 20% validation
+    X_dev, X_test, y_dev, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=42, stratify=y
+    )
+    X_train, X_val, y_train, y_val = train_test_split(
+        X_dev, y_dev, test_size=0.25, random_state=42, stratify=y_dev
+    )
+
+    preprocessor.save(X_train, "../../../datasets/clean/data/train_data.csv")
+    preprocessor.save(X_val, "../../../datasets/clean/data/val_data.csv")
+    preprocessor.save(X_test, "../../../datasets/clean/data/test_data.csv")
+
+    preprocessor.save(y_train, "../../../datasets/clean/labels/train_labels.csv")
+    preprocessor.save(y_val, "../../../datasets/clean/labels/val_labels.csv")
+    preprocessor.save(y_test, "../../../datasets/clean/labels/test_labels.csv")

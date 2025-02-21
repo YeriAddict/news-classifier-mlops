@@ -1,0 +1,30 @@
+{
+    "model": "random_forest",
+    "raw_data_paths": {
+        "train": "datasets/raw/train.tsv",
+        "test": "datasets/raw/test.tsv",
+        "val": "datasets/raw/valid.tsv",
+        "combined": "datasets/raw/combined.csv"
+    },
+    "clean_data_paths": {
+        "data": {
+            "train": "datasets/clean/data/train_data.csv",
+            "test": "datasets/clean/data/test_data.csv",
+            "val": "datasets/clean/data/valid_data.csv"
+        },
+        "labels": {
+            "train": "datasets/clean/labels/train_labels.csv",
+            "test": "datasets/clean/labels/test_labels.csv",
+            "val": "datasets/clean/labels/valid_labels.csv"
+        }
+    },
+    "featurizer_path": "cache/featurizer.pkl",
+    "model_path": "cache/random_forest_model.pkl",
+    "params": {
+        "n_estimators": 100,
+        "max_depth": 5,
+        "random_state": 42,
+        "min_samples_split": 2,
+        "min_samples_leaf": 1
+    }
+}

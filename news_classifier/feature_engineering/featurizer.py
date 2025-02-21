@@ -11,7 +11,6 @@ from sklearn.impute import SimpleImputer
 from sklearn.pipeline import FeatureUnion, FunctionTransformer, Pipeline
 
 from news_classifier.utils.models import Claim
-from news_classifier.utils.reader import load_claims_from_csv
 
 LOGGER = logging.getLogger(__name__)
 
@@ -110,10 +109,3 @@ class Featurizer(BaseFeaturizer):
         with open(output_path, "wb") as f:
             pickle.dump(self.combined_featurizer, f)
             LOGGER.info("Featurizer fitted and saved successfully.")
-
-if __name__ == "__main__":
-    X_train = load_claims_from_csv("../../../datasets/clean/data/train_data.csv")
-    
-    featurizer = Featurizer()
-    featurizer.fit(X_train)
-    featurizer.save("../../../cache/featurizer.pkl")

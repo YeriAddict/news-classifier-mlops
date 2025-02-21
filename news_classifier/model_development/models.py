@@ -11,7 +11,6 @@ from sklearn.metrics import roc_auc_score
 
 from news_classifier.feature_engineering.featurizer import Featurizer
 from news_classifier.utils.models import Claim
-from news_classifier.utils.reader import load_claims_from_csv, load_labels_from_csv
 
 class BaseModel(ABC):
     @abstractmethod
@@ -31,7 +30,7 @@ class BaseModel(ABC):
         pass
 
 class RandomForestModel(BaseModel):
-    def __init__(self, config: Optional[Dict] = None):
+    def __init__(self, config: Optional[Dict]):
         self.config = config
 
         self.featurizer = Featurizer()
@@ -43,7 +42,7 @@ class RandomForestModel(BaseModel):
         return self.model.predict_proba(features)
 
     def fit(self, X_train: List[Claim], y_train: List[str]) -> None:
-        with open("../../../cache/featurizer.pkl", "rb") as f:
+        with open(self.config["featurizer_path"], "rb") as f:
             self.featurizer = pickle.load(f)
         features = self.featurizer.transform(X_train)
         self.model.fit(features, y_train)
@@ -75,20 +74,3 @@ class RandomForestModel(BaseModel):
     def save(self, path):
         with open(path, "wb") as f:
             pickle.dump(self.model, f)
-
-if __name__ == "__main__":
-    X_train = load_claims_from_csv("../../../datasets/clean/data/train_data.csv")
-    X_val = load_claims_from_csv("../../../datasets/clean/data/val_data.csv")
-    X_test = load_claims_from_csv("../../../datasets/clean/data/test_data.csv")
-    y_train = load_labels_from_csv("../../../datasets/clean/labels/train_labels.csv")
-    y_val = load_labels_from_csv("../../../datasets/clean/labels/val_labels.csv")
-    y_test = load_labels_from_csv("../../../datasets/clean/labels/test_labels.csv")
-
-    model = RandomForestModel()
-    model.fit(X_train, y_train)
-    test_results = model.evaluate(X_test, y_test)
-    validation_results = model.evaluate(X_val, y_val)
-    print(test_results)
-    print(validation_results)
-
-    model.save("../../../cache/random_forest_model.pkl")

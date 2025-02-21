@@ -7,6 +7,7 @@ import logging
 import numpy as np
 from sklearn.feature_extraction import DictVectorizer
 from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.impute import SimpleImputer
 from sklearn.pipeline import FeatureUnion, FunctionTransformer, Pipeline
 
 from news_classifier.utils.models import Claim
@@ -86,9 +87,12 @@ class Featurizer(BaseFeaturizer):
             ("textual_featurizer", tfidf_featurizer)
         ])
 
-        self.combined_featurizer = FeatureUnion([
-            ("manual_feature_pipeline", manual_feature_pipeline),
-            ("textual_feature_pipeline", text_feature_pipeline)
+        self.combined_featurizer = Pipeline([
+            ("feature_union", FeatureUnion([
+                ("manual_feature_pipeline", manual_feature_pipeline),
+                ("textual_feature_pipeline", text_feature_pipeline)
+            ])),
+            ("imputer", SimpleImputer(strategy="mean"))
         ])
 
         self.combined_featurizer.fit(claims)

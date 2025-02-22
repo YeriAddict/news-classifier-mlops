@@ -117,12 +117,7 @@ def main():
         mlflow.log_metrics({f"test_{k}": v for k, v in test_results.items()})
         mlflow.log_metrics({f"val_{k}": v for k, v in val_results.items()})
 
-        rf_params = {
-            "n_estimators": config["params"]["n_estimators"],
-            "max_depth": config["params"]["max_depth"],
-            "min_samples_split": config["params"]["min_samples_split"],
-            "min_samples_leaf": config["params"]["min_samples_leaf"],
-        }
+        rf_params = config.get("params", {})
         mlflow.log_params(rf_params)
 
         LOGGER.info("Pipeline complete.")

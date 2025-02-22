@@ -1,11 +1,11 @@
 import logging
 import json
 import pickle
-import numpy as np
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel, BaseSettings
+from pydantic import BaseModel
+from pydantic_settings import BaseSettings
 
 from news_classifier.model_development.models import RandomForestModel
 from news_classifier.utils.models import Claim
@@ -48,17 +48,27 @@ class Statement(BaseModel):
 class Prediction(BaseModel):
     label: int
 
+def construct_claim(text: str) -> Claim:
+    return Claim(**{
+        "statement": text,
+        "id": None,
+        "subjects": None,
+        "speaker": None,
+        "speaker_job_title": None,
+        "state_info": None,
+        "party_affiliation": None,
+        "barely_true_counts": float("nan"),
+        "false_counts": float("nan"),
+        "half_true_counts": float("nan"),
+        "mostly_true_counts": float("nan"),
+        "pants_on_fire_counts": float("nan"),
+        "context": None,
+    })
+
 @app.post("/api/predict", response_model=Prediction)
 def predict(statement: Statement):
     try:
-        claim = Claim(
-            statement=statement.text,
-            barely_true_count=float("nan"),
-            false_count=float("nan"),
-            half_true_count=float("nan"),
-            mostly_true_count=float("nan"),
-            pants_fire_count=float("nan"),
-        )
+        claim = construct_claim(statement.text)
         label = model.predict([claim])
         prediction = Prediction(label=label)
         LOGGER.info(f"Prediction: {prediction}")

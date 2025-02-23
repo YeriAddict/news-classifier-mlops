@@ -11,7 +11,7 @@ RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-RUN py -m news_classifier.run --config-file config/random_forest.json
+RUN python -m news_classifier.run --config-file config/random_forest.json
 
 # Stage 2: Production image
 FROM python:3.11-slim

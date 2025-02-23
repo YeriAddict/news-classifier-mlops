@@ -2,6 +2,7 @@ import argparse
 import json
 import logging
 import os
+from pathlib import Path
 import random
 
 import mlflow
@@ -44,6 +45,7 @@ def main():
     config = load_config(args.config_file)
     set_random_seed(42)
 
+    mlflow.set_tracking_uri("cache/mlruns")
     mlflow.set_experiment(config.get("mlflow_experiment", "default_experiment"))
 
     with mlflow.start_run() as run:

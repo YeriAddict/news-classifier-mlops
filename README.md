@@ -81,20 +81,22 @@ The model is trained on the **LIAR** dataset, which you can find on [Papers With
 
 The dataset includes the following columns:
 
-- **id**: Unique identifier for each statement.
-- **label**: The truthfulness label of the statement.
-- **statement**: The text of the statement.
-- **subjects**: Subject(s) related to the statement.
-- **speaker**: The individual who made the statement.
-- **speaker_job_title**: The job title of the speaker.
-- **state_info**: Information about the state.
-- **party_affiliation**: The political party affiliation of the speaker.
-- **barely_true_counts**: Count of "barely true" ratings (including the current statement).
-- **false_counts**: Count of "false" ratings.
-- **half_true_counts**: Count of "half true" ratings.
-- **mostly_true_counts**: Count of "mostly true" ratings.
-- **pants_on_fire_counts**: Count of "pants on fire" ratings.
-- **context**: The context or location where the statement was made.
+| Column                  | Description                                                                          |
+|-------------------------|--------------------------------------------------------------------------------------|
+| **id**                  | Unique identifier for each statement.                                                |
+| **label**               | The truthfulness label of the statement.                                             |
+| **statement**           | The text of the statement.                                                           |
+| **subjects**            | Subject(s) related to the statement.                                                 |
+| **speaker**             | The individual who made the statement.                                               |
+| **speaker_job_title**   | The job title of the speaker.                                                        |
+| **state_info**          | Information about the state.                                                         |
+| **party_affiliation**   | The political party affiliation of the speaker.                                      |
+| **barely_true_counts**  | Count of "barely true" ratings (including the current statement).                    |
+| **false_counts**        | Count of "false" ratings.                                                            |
+| **half_true_counts**    | Count of "half true" ratings.                                                        |
+| **mostly_true_counts**  | Count of "mostly true" ratings.                                                      |
+| **pants_on_fire_counts**| Count of "pants on fire" ratings.                                                    |
+| **context**             | The context or location where the statement was made.                                |
 
 ### Model
 
